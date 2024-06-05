@@ -1,0 +1,4 @@
+flash-attn==2.5.7
+sentence-transformers==2.6.1
+transformers==4.39.2
+vllm==0.4.0.post1

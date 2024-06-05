@@ -1,93 +1,179 @@
-# universal-el
+# Universal Entity Linking
+
+This repository contains the implementation of the entity linking pipeline proposed in our article `name of our article`. There are two versions available:
+- **vLLM**: Optimized for speed but requires more VRAM.
+- **HuggingFace**: More VRAM-efficient, suitable for consumer GPUs.
 
 
+The vLLM solution is designed to be as fast as possible, which also means that it has higher VRAM usage. On the other hand HuggingFace solution is slower, but should fit into consumer focused GPUs.
 
-## Getting started
+## Disclaimer
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **vLLM**: Best for systems with high GPU resources (A100 or higher, with at least 40 GB of VRAM).
+- **HuggingFace**: Suitable for consumer GPUs, but slower.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+For lower-end GPUs, the vLLM version may require code adjustments to run efficiently.
 
-## Add your files
+## Installing
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+The pipeline uses the `Faiss` library (GPU version) and has been tested with Python 3.10 and A100 80GB GPU.
 
+### vLLM version
+
+1. Create a new Anaconda environment:
+
+    ```bash
+    conda create -n faiss_vllm python=3.10
+    conda activate faiss_vllm
+    ```
+
+2. Install `faiss-gpu`:
+
+    ```bash
+    conda install pytorch::faiss-gpu
+    ```
+
+3. Install Python requirements:
+
+    ```bash
+    pip install -r reqs/requirements_vllm.txt
+    ```
+
+### HuggingFace version
+
+1. Create a new Anaconda environment:
+
+    ```bash
+    conda create -n faiss_hf python=3.10
+    conda activate faiss_hf
+    ```
+
+2. Install `faiss-gpu`:
+
+    ```bash
+    conda install pytorch::faiss-gpu
+    ```
+
+3. Install Python requirements:
+
+    ```bash
+    pip install -r reqs/requirements_hf.txt
+    ```
+
+## Faiss Wikidata index
+
+The pipeline requires a Faiss Wikidata `IndexBinaryFlat`, downloadable via `wget`:
+
+```bash
+wget link ...
 ```
-cd existing_repo
-git remote add origin https://gitlab.pcss.pl/daisd-ai/universal-el.git
-git branch -M main
-git push -uf origin main
+
+The index is approximately 5 GB and contains around 40 million Wikidata entities. Refer to the publication for more details.
+
+## Tests
+To verify the installation, run the tests. Update the FAISS_INDEX_PATH in the test files with the path to your Faiss Wikidata index.
+
+There are two test files, one for vLLM (`test_vllm_el.py`) based solution and the other for HuggingFace (`test_hf_el.py`). In both cases you need to specify path to the Faiss Wikidata index directly in given test file. 
+
+```python
+FAISS_INDEX_PATH = 'Faiss Wikidata index PATH GOES HERE'
 ```
 
-## Integrate with your tools
+After that you can run tests using specific conda environment while being in the project directory:
 
-- [ ] [Set up project integrations](https://gitlab.pcss.pl/daisd-ai/universal-el/-/settings/integrations)
+### vLLM test
+```bash
+conda activate faiss_vllm
+python -m unittest tests/test_vllm_el.py
+```
 
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### HuggingFace test
+```bash
+conda activate faiss_hf
+python -m unittest tests/test_hf_el.py
+```
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+The vLLM implementation provides the FastLinker, and HuggingFace offers the MemoryEfficientLinker. Both classes have identical methods and return the same results. Example usage with FastLinker:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Let's start with initializing the class.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```python
+from src.vllm_el import FastLinker
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+el = FastLinker(faiss_index_path="PATH TO THE FAISS INDEX", gpu_memory_utilization=0.5, context_window_size=20)
+```
+In case of vLLM solution this can take awhile (on A100 80GB it takes about 45 seconds), HuggingFace solution initialization is faster and should not take more than few seconds.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+There are other parameters of `FastLinker` class, but important are `gpu_memory_utilization` and `context_window_size`. 
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+The default value for `gpu_memory_utilization` is set to `0.5` and it works with A100 80GB, but it might be too low for other GPUs. In case of memory errors, try to increase it's value.
 
-## License
-For open source projects, say how it is licensed.
+The `context_window_size` parameter decides how many words of each side of the entity should be taken into consideration while generating profile for the entity. More words should allow model to understand context better, at a cost of slower solution. The default is set to `20`.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+The `FastLinker` provides four methods:
+- `run_linking` - expects text and list of entities.
+    ```python
+    text = "Syracuse and Pitt in the # ACC ... its gon na be a long year for Maryland"
+    entities = ["Syracuse", "Pitt", "ACC", "Maryland"]
+
+    results = el.run_linking(text, entities)
+    ```
+- `run_chunks_linking` - expects list of texts and list of entities for each text.
+    ```python
+    texts = [
+        "Syracuse and Pitt in the # ACC ... its gon na be a long year for Maryland",
+        "MSU mens basketball signs Gary Harris . Womens basketball gets Mariah Harris . Harrises on Harrises on Harrises . # GottaHaveIt",
+    ]
+    entities = [
+        ["Syracuse", "Pitt", "ACC", "Maryland"],
+        ["MSU", "Harris"],
+    ]
+
+    results = el.run_chunks_linking(texts, entities)
+    ```
+- `run_positional_linking` - expects text, list of entities and list of indices. This is same implementation as `run_linking`, but instead of searching for positions of entities in text, expects to have it passed. It will be explained why later.
+    ```python
+    text = "Syracuse and Pitt in the # ACC ... its gon na be a long year for Maryland"
+    entities = ["Syracuse", "Pitt", "ACC", "Maryland"]
+    indices = [0, 13, 27, 65] #  only starting positions of entities
+
+    results = el.run_positional_linking(text, entities, indices)
+    ```
+- `run_positional_chunks_linking` - same as `run_chunks_linking`, but also expects list of indices for each list of entities.
+    ```python
+    texts = [
+        "Syracuse and Pitt in the # ACC ... its gon na be a long year for Maryland",
+        "MSU mens basketball signs Gary Harris . Womens basketball gets Mariah Harris . Harrises on Harrises on Harrises . # GottaHaveIt",
+    ]
+    entities = [
+        ["Syracuse", "Pitt", "ACC", "Maryland"],
+        ["MSU", "Harris"],
+    ]
+    indices = [
+        [0, 13, 27, 65],
+        [0, 26],
+    ]
+
+    results = el.run_positional_chunks_linking(texts, entities)
+    ```
+
+Now let's explain why there are two, seemingly the same, pairs of methods.
+
+In case of `run_linking` and `run_chunks_linking` there is internal method which search for all occurrences of entities. So for example in text:
+```python
+"Cat cat cat cat"
+```
+it will find all 4 occurrences of word `cat`. This also works in case of any characters next to the word, for example:
+
+```python
+"Cat1 cat's de'cat 6cat7"
+```
+Also method should return 4 occurrences. And this can be helpful in certain situations. The problem is that it will also work for words inside other words, for example:
+```python
+"Pitt is an acronym for Pittsburgh Panthers men's basketball."
+```
+Searching for word `Pitt` is going to return `Pitt` twice, one for `Pitt` and the other for `Pittsburgh`. 
+
+That is why we implemented two other methods, `run_positional_linking` and `run_positional_chunks_linking`. They do not utilize this internal search method and only extract entities based on provided indices. These methods might be useful when using NER system that returns indices for found entities.
