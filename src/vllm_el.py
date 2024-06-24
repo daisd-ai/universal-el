@@ -71,7 +71,7 @@ class FastLinker:
         logging.info("Linker initialized")
 
     @staticmethod
-    def find_all(string: str, substring: str) -> list[int]:
+    def _find_all(string: str, substring: str) -> list[int]:
         """
         Find all occurrences of a substring in a string.
 
@@ -134,7 +134,7 @@ class FastLinker:
 
         contexts = []
         for entity in entities:
-            indicies = self.find_all(text, entity)
+            indicies = self._find_all(text, entity)
 
             if len(indicies) == 0:
                 raise ValueError(f"Entity '{entity}' not found in text")
