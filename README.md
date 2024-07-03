@@ -1,6 +1,10 @@
+<p align="center">
+    <img src="image.png" width="250" height="250">
+</p>
+
 # Universal Entity Linking
 
-This repository contains the implementation of the entity linking pipeline proposed in our article `name of our article`. There are two versions available:
+This repository contains the implementation of the entity linking pipeline proposed in our article `name and link of our article`. There are two versions available:
 - **vLLM**: Optimized for speed but requires more VRAM.
 - **HuggingFace**: More VRAM-efficient, suitable for consumer GPUs.
 
@@ -177,3 +181,12 @@ Also method should return 4 occurrences. And this can be helpful in certain situ
 Searching for word `Pitt` is going to return `Pitt` twice, one for `Pitt` and the other for `Pittsburgh`. 
 
 That is why we implemented two other methods, `run_positional_linking` and `run_positional_chunks_linking`. They do not utilize this internal search method and only extract entities based on provided indices. These methods might be useful when using NER system that returns indices for found entities.
+
+## License
+The framework implementation, dataset for LLM fine tuning are released under `MIT` license. The `Tweeki_gold.jsonl`, `ISTEX_1000.jsonl`, `RSS_500.jsonl` and `anydef-orpo` LLM model are released under `Apache-2.0` license. The `reuters-128_wikidata.jsonl` is released under `AGPL-3.0` license.
+
+## Citation
+If you find our work useful, please cite using this BibTeX:
+```bibtex
+here is going to be our paper citation after publication, right now you can cite by providing link to this repository
+```
