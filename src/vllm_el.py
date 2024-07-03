@@ -17,7 +17,7 @@ class FastLinker:
     Args:
         faiss_index_path (str): The file path to the Faiss index.
         top_k (int): The number of top-k entities to return. Default is 1.
-        llm_model (str): The LLM model to use for entity linking. Default is "arynkiewicz/anydef-orpo".
+        llm_model (str): The LLM model to use for entity linking. Default is "daisd-ai/anydef-orpo".
         tensor_parallel_size (int): The size of the tensor parallelism. Default is 1.
         gpu_memory_utilization (float): The GPU memory utilization. Default is 0.5.
         embedding_model (str): The embedding model to use for sentence representation. Default is "mixedbread-ai/mxbai-embed-large-v1".
@@ -28,7 +28,7 @@ class FastLinker:
         self,
         faiss_index_path: str,
         top_k: int = 1,
-        llm_model: str = "arynkiewicz/anydef-orpo",
+        llm_model: str = "daisd-ai/anydef-orpo",
         tensor_parallel_size: int = 1,
         gpu_memory_utilization: float = 0.5,
         embedding_model: str = "mixedbread-ai/mxbai-embed-large-v1",

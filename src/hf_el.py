@@ -21,7 +21,7 @@ class MemoryEfficientLinker:
         device_map (str, optional): The device mapping. Defaults to "auto".
         torch_dtype (torch.dtype, optional): The torch data type. Defaults to torch.bfloat16.
         load_in_4bit (bool, optional): Whether to load the model in 4-bit mode. Defaults to False.
-        llm_model (str, optional): The LLM model. Defaults to "arynkiewicz/anydef-orpo".
+        llm_model (str, optional): The LLM model. Defaults to "daisd-ai/anydef-orpo".
         embedding_model (str, optional): The embedding model. Defaults to "mixedbread-ai/mxbai-embed-large-v1".
         context_window_size (int): Number of words to consider of each side of the entity. Default is 20.
     """
@@ -34,7 +34,7 @@ class MemoryEfficientLinker:
         torch_dtype: torch.dtype = torch.bfloat16,
         load_in_4bit: bool = False,
         batch_size: int = 16,
-        llm_model: str = "arynkiewicz/anydef-orpo",
+        llm_model: str = "daisd-ai/anydef-orpo",
         embedding_model: str = "mixedbread-ai/mxbai-embed-large-v1",
         context_window_size: int = 20,
     ) -> None:
