@@ -69,10 +69,18 @@ The pipeline uses the `Faiss` library (GPU version) and has been tested with Pyt
 The pipeline requires a Faiss Wikidata `IndexBinaryFlat`, downloadable via `wget`:
 
 ```bash
-wget link ...
+wget "https://box.pionier.net.pl/f/0f9c117b7bd24a0ab409/?dl=1" -O faiss_ubinary_wikidata_v2.index
 ```
 
 The index is approximately 5 GB and contains around 40 million Wikidata entities. Refer to the publication for more details.
+
+After successful download you can check if the file is not corrupted by running:
+
+```bash
+md5sum faiss_ubinary_wikidata_v2.index
+```
+
+it should return following hash: `82bada08ef48bc3ba15bf8c43d56b930`.
 
 ## Tests
 To verify the installation, run the tests. Update the FAISS_INDEX_PATH in the test files with the path to your Faiss Wikidata index.
