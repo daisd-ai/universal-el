@@ -4,7 +4,7 @@
 
 # Universal Entity Linking
 
-This repository contains the implementation of the entity linking pipeline proposed in our article `name and link of our article`. There are two versions available:
+This repository contains the implementation of the entity linking pipeline proposed in our article [Universal entity linking](https://www.sciencedirect.com/science/article/pii/S0952197625021931). There are two versions available:
 - **vLLM**: Optimized for speed but requires more VRAM.
 - **HuggingFace**: More VRAM-efficient, suitable for consumer GPUs.
 
