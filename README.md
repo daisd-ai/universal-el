@@ -196,5 +196,16 @@ The framework implementation, dataset for LLM fine tuning are released under `MI
 ## Citation
 If you find our work useful, please cite using this BibTeX:
 ```bibtex
-here is going to be our paper citation after publication, right now you can cite by providing link to this repository
+@article{RYNKIEWICZ2025112185,
+    title = {Universal entity linking},
+    journal = {Engineering Applications of Artificial Intelligence},
+    volume = {161},
+    pages = {112185},
+    year = {2025},
+    issn = {0952-1976},
+    doi = {https://doi.org/10.1016/j.engappai.2025.112185},
+    url = {https://www.sciencedirect.com/science/article/pii/S0952197625021931},
+    author = {Adam Aron Rynkiewicz and Raul Palma and Piotr Formanowicz},
+    keywords = {Entity linking, Large Language Model, Wikidata, Text embedding}
+}
 ```
